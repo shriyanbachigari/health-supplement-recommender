@@ -12,6 +12,7 @@ class Supplement(models.Model):
     review_count = models.IntegerField()
     product_url = models.URLField(max_length=1000)
     highlights = models.TextField(blank=True, null=True)
+    metadata = models.JSONField(blank=True, null=True)
     def __str__(self):
         return self.title
     

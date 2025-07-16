@@ -8,6 +8,8 @@ from rest_framework.permissions import IsAuthenticated
 class RecommendAPIView(APIView):
     def get(self, request):
         # read ?n= from the URL, default to 5
+        profile = request.user.profile
+        queryset = Supplement.objects.all()
         try:
             n = int(request.GET.get('n', 5))
         except ValueError:
