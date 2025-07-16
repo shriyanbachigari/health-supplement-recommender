@@ -30,8 +30,18 @@ ALLOWED_HOSTS = []
 
 # Application definition
 
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.SessionAuthentication',
+        'rest_framework.authentication.BasicAuthentication',
+    ],
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.AllowAny',
+    ],
+}
+
 INSTALLED_APPS = [
-    "recommender.apps.RecommenderConfig",
+    "recommender",
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",

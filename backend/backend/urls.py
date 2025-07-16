@@ -22,4 +22,5 @@ urlpatterns = [
     path('api/', include('supplements.urls')),
     path('api/', include('recommender.urls')),
     path("admin/", admin.site.urls),
+    path('api-auth/', include('rest_framework.urls')),
 ]
