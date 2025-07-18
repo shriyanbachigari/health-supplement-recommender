@@ -16,4 +16,5 @@ class UserProfileSerializer(serializers.ModelSerializer):
             'budget_min',
             'budget_max',
             'known_allergies',
+            'micronutrient_interests',
         ]
