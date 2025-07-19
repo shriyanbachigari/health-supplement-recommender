@@ -7,6 +7,7 @@ from rest_framework.permissions import IsAuthenticated
 from .models import UserProfile
 from rest_framework.status import HTTP_201_CREATED, HTTP_200_OK
 from django.db.models import Q
+import math
 
 class RecommendAPIView(APIView):
     def get(self, request):
@@ -47,8 +48,10 @@ class RecommendAPIView(APIView):
             goal_score = goal_matches / len(selected_goals) if selected_goals else 0.0
 
             rating_score = float(s.avg_rating or 0) / MAX_RATING
+            #used log to normalize and remove skewness
+            rcount_score = math.log(s.rating_count + 1) / math.log(197945 + 1) if s.rating_count else 0.0
 
-            score = (4 * micro_score) + (2 * goal_score) + (1 * rating_score)
+            score = (3 * micro_score) + (2 * goal_score) + (1 * rating_score) + (1 * rcount_score)
 
             candidates.append((s, score))
 
