@@ -33,7 +33,6 @@ HEALTH_GOAL_CHOICES = [
     ('heart',         'Heart Health'),
     ('skin',          'Skin Health'),
     ('sleep',        'Sleep Support'),
-    # add more as needed…
 ]
 
 class UserProfile(models.Model):
@@ -42,7 +41,15 @@ class UserProfile(models.Model):
                                 related_name='profile')
     age = models.IntegerField()
     gender = models.CharField(max_length=10)
-    health_goals = ArrayField(models.CharField(max_length=50), default=list)
+    health_goals = ArrayField(
+                                   models.CharField(
+                                     max_length=50,
+                                     choices=HEALTH_GOAL_CHOICES
+                                   ),
+                                   default=list,
+                                   blank=True,
+                                   help_text="Select one or more health goals"
+                               )
     dietary_restrictions = ArrayField(models.CharField(max_length=50), default=list)
     budget_min = models.DecimalField(max_digits=6, decimal_places=2, null=True, blank=True)
     budget_max = models.DecimalField(max_digits=6, decimal_places=2, null=True, blank=True)
