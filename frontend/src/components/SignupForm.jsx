@@ -1,21 +1,42 @@
 // src/components/SignUp.jsx
 import { useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 
 export default function SignupForm() {
-  const [fullName, setFullName] = useState('')
+  const [name, setName] = useState('')
   const [email, setEmail]     = useState('')
   const [password, setPassword] = useState('')
   const [agreed, setAgreed]   = useState(false)
+  const navigate = useNavigate()
 
-  const handleSubmit = e => {
+  const handleSubmit = async e => {
     e.preventDefault()
-    // TODO: call your signup API here
-    console.log({ fullName, email, password, agreed })
+    const resp = await fetch('http://localhost:8000/api/signup/', {
+      method: 'POST',
+      headers: { 'Content-Type':'application/json' },
+      body: JSON.stringify({
+        username: email,
+        email: email,
+        password,
+        first_name: name,
+      }),
+    })
+    const data = await resp.json()
+    if (!resp.ok) {
+      console.error(data)
+      return alert('Signup failed')
+    }
+    // Store tokens
+    localStorage.setItem('accessToken', data.access)
+    localStorage.setItem('refreshToken', data.refresh)
+    localStorage.setItem('hasProfile', 'false')
+    // Redirect into onboarding
+    navigate('/onboard')
+    console.log({ name, email, password, agreed })
   }
 
   return (
-    <div className="min-h-screen flex flex-col bg-slate-50">
+    <div className="min-h-screen flex flex-col bg-white">
       {/* Header */}
       <header className="flex items-center justify-between border-b border-[#e7edf4] px-4 md:px-10 py-3 bg-white">
         <div className="flex items-center gap-4 text-[#0d141c]">
@@ -31,11 +52,11 @@ export default function SignupForm() {
               />
             </svg>
           </div>
-          <h2 className="text-[#0d141c] text-lg font-bold">Vitality</h2>
+          <h2 className="text-[#0d141c] text-lg font-bold">SuppleNet</h2>
         </div>
         <Link
           to="/login"
-          className="h-10 px-4 bg-[#e7edf4] text-[#0d141c] text-sm font-bold rounded-xl hover:bg-gray-200 transition"
+          className="h-7 px-4 bg-[#e7edf4] text-[#0d141c] text-sm font-bold rounded-xl hover:bg-gray-200 transition"
         >
           Log In
         </Link>
@@ -43,7 +64,7 @@ export default function SignupForm() {
 
       {/* Form */}
       <main className="flex-1 flex justify-center py-5 px-4 md:px-40">
-        <div className="w-full max-w-md bg-white rounded-lg shadow-sm">
+        <div className="w-full max-w-md bg-white rounded-lg">
           <h2 className="text-[#0d141c] text-2xl font-bold text-center pt-5 pb-3">
             Create your account
           </h2>
@@ -52,16 +73,19 @@ export default function SignupForm() {
             {/* Full name */}
             <div>
               <label className="block text-[#0d141c] text-base font-medium mb-2">
-                Full name
+                Name
               </label>
               <input
                 type="text"
-                value={fullName}
-                onChange={e => setFullName(e.target.value)}
-                placeholder="Enter your full name"
-                className="w-full h-14 px-4 border border-[#cedbe8] rounded-xl bg-slate-50 placeholder-[#49739c] focus:outline-none focus:ring-0 focus:border-[#cedbe8]"
+                value={name}
+                onChange={e => setName(e.target.value)}
+                placeholder="Enter your name"
+                className="w-full h-14 px-4 border border-[#cedbe8] rounded-xl bg-white placeholder-[#49739c] focus:outline-none focus:ring-0 focus:border-[#cedbe8]"
                 required
               />
+              <p className="text-[#49739c] text-sm mt-1">
+                No spaces or special characters allowed.
+              </p>
             </div>
 
             {/* Email */}
@@ -74,7 +98,7 @@ export default function SignupForm() {
                 value={email}
                 onChange={e => setEmail(e.target.value)}
                 placeholder="Enter your email"
-                className="w-full h-14 px-4 border border-[#cedbe8] rounded-xl bg-slate-50 placeholder-[#49739c] focus:outline-none focus:ring-0 focus:border-[#cedbe8]"
+                className="w-full h-14 px-4 border border-[#cedbe8] rounded-xl bg-white placeholder-[#49739c] focus:outline-none focus:ring-0 focus:border-[#cedbe8]"
                 required
               />
             </div>
@@ -89,7 +113,7 @@ export default function SignupForm() {
                 value={password}
                 onChange={e => setPassword(e.target.value)}
                 placeholder="Create a password"
-                className="w-full h-14 px-4 border border-[#cedbe8] rounded-xl bg-slate-50 placeholder-[#49739c] focus:outline-none focus:ring-0 focus:border-[#cedbe8]"
+                className="w-full h-14 px-4 border border-[#cedbe8] rounded-xl bg-white placeholder-[#49739c] focus:outline-none focus:ring-0 focus:border-[#cedbe8]"
                 required
               />
               <p className="text-[#49739c] text-sm mt-1">
@@ -131,6 +155,4 @@ export default function SignupForm() {
       </main>
     </div>
   )
-}
-
 }

@@ -51,7 +51,7 @@ class RecommendAPIView(APIView):
             #used log to normalize and remove skewness
             rcount_score = math.log(s.rating_count + 1) / math.log(197945 + 1) if s.rating_count else 0.0
 
-            score = (3 * micro_score) + (2 * goal_score) + (1 * rating_score) + (1 * rcount_score)
+            score = (3.5 * micro_score) + (2 * goal_score) + (1 * rating_score) + (1 * rcount_score)
 
             candidates.append((s, score))
 
