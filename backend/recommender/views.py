@@ -8,6 +8,8 @@ from .models import UserProfile
 from rest_framework.status import HTTP_201_CREATED, HTTP_200_OK
 from django.db.models import Q
 import math
+from rest_framework.generics import RetrieveAPIView
+from django.http import Http404
 
 class RecommendAPIView(APIView):
     def get(self, request):
@@ -78,12 +80,21 @@ class OnboardAPIView(APIView):
     permission_classes = [IsAuthenticated]
     def post(self, request):
         
-        profile, created = UserProfile.objects.get_or_create(user=request.user)
-        serializer = UserProfileSerializer(
-            profile,
-            data=request.data,
-            context={'request': request}
-        )
+        try:
+            profile = UserProfile.objects.get(user=request.user)
+            created = False
+            serializer = UserProfileSerializer(
+                profile,
+                data=request.data,
+                context={'request': request}
+            )
+        except UserProfile.DoesNotExist:
+            created = True
+            serializer = UserProfileSerializer(
+                data=request.data,
+                context={'request': request}
+            )
+        
         serializer.is_valid(raise_exception=True)
         serializer.save()
 
@@ -91,3 +102,14 @@ class OnboardAPIView(APIView):
             serializer.data,
             status=HTTP_201_CREATED if created else HTTP_200_OK
         )
+
+class UserProfileAPIView(RetrieveAPIView):
+    serializer_class = UserProfileSerializer
+    permission_classes = [IsAuthenticated]
+
+    def get_object(self):
+        # simply return the profile for the logged‑in user
+        try:
+            return self.request.user.profile
+        except UserProfile.DoesNotExist:
+            raise Http404("Profile not found")

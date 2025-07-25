@@ -24,6 +24,7 @@ MICRONUTRIENT_CHOICES = [
     ('fiber',      'Fiber'),
     ('collagen',   'Collagen'),
     ('creatine',   'Creatine'),
+    ('protein',    'Protein'),
 ]
 
 HEALTH_GOAL_CHOICES = [

@@ -20,13 +20,12 @@ export default function LoginForm() {
       console.error(data)
       return alert('Login failed')
     }
-    // store tokens
+    console.log('Access token:', data.access)
     localStorage.setItem('accessToken', data.access)
     localStorage.setItem('refreshToken', data.refresh)
     if (rememberMe) {
       localStorage.setItem('rememberMe', 'true')
     }
-    // check profile existence
     const profileResp = await fetch('http://localhost:8000/api/profile/', {
       headers: { Authorization: `Bearer ${data.access}` }
     })
