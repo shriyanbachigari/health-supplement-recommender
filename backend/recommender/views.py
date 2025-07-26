@@ -12,6 +12,7 @@ from rest_framework.generics import RetrieveAPIView
 from django.http import Http404
 
 class RecommendAPIView(APIView):
+    permission_classes = [IsAuthenticated]
     def get(self, request):
         # read ?n= from the URL, default to 5
         profile = request.user.profile

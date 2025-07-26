@@ -3,6 +3,13 @@ from django.conf import settings
 from django.db import models
 from django.contrib.postgres.fields import ArrayField
 
+DIETARY_RESTRICTION_CHOICES = [
+    ('vegetarian', 'Vegetarian'),
+    ('vegan', 'Vegan'),
+    ('gluten free', 'Gluten Free'),        
+    ('dairy free', 'Dairy Free'),
+]
+
 MICRONUTRIENT_CHOICES = [
     ('',           'None'),
     ('vitamin a',  'Vitamin A'),
@@ -36,12 +43,18 @@ HEALTH_GOAL_CHOICES = [
     ('sleep',        'Sleep Support'),
 ]
 
+GENDER_CHOICES = [
+    ('male', 'Male'),
+    ('female', 'Female'),
+    ('other', 'Other'),
+]
+
 class UserProfile(models.Model):
     user = models.OneToOneField(settings.AUTH_USER_MODEL, 
                                 on_delete=models.CASCADE, 
                                 related_name='profile')
     age = models.IntegerField()
-    gender = models.CharField(max_length=10)
+    gender = models.CharField(max_length=10, choices=GENDER_CHOICES)
     health_goals = ArrayField(
                                    models.CharField(
                                      max_length=50,
@@ -51,7 +64,15 @@ class UserProfile(models.Model):
                                    blank=True,
                                    help_text="Select one or more health goals"
                                )
-    dietary_restrictions = ArrayField(models.CharField(max_length=50), default=list)
+    dietary_restrictions = ArrayField(
+                                   models.CharField(
+                                     max_length=50,
+                                     choices=DIETARY_RESTRICTION_CHOICES
+                                   ),
+                                   default=list,
+                                   blank=True,
+                                   help_text="Select one or more dietary restrictions"
+                               )
     budget_min = models.DecimalField(max_digits=6, decimal_places=2, null=True, blank=True)
     budget_max = models.DecimalField(max_digits=6, decimal_places=2, null=True, blank=True)
     known_allergies = ArrayField(models.CharField(max_length=50), default=list, blank=True)

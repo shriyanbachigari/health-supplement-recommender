@@ -2,7 +2,7 @@ import { Routes, Route, Navigate } from 'react-router-dom'
 import LandingPage from './components/LandingPage'
 import SignupForm   from './components/SignupForm'
 import LoginForm    from './components/LoginForm'
-import OnboardingWizard from './components/OnboardingWizard'
+import OnboardingWizard from './onboard/OnboardingWizard'
 import RecommendationsPage from './components/RecommendationsPage'
 
 function App() {

@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import UserProfile, HEALTH_GOAL_CHOICES, MICRONUTRIENT_CHOICES
+from .models import UserProfile, HEALTH_GOAL_CHOICES, MICRONUTRIENT_CHOICES, DIETARY_RESTRICTION_CHOICES
 
 class UserProfileSerializer(serializers.ModelSerializer):
     user = serializers.HiddenField(
@@ -14,7 +14,7 @@ class UserProfileSerializer(serializers.ModelSerializer):
         allow_empty=True
     )
     dietary_restrictions = serializers.ListField(
-        child=serializers.CharField(max_length=50),
+        child=serializers.ChoiceField(choices=DIETARY_RESTRICTION_CHOICES),
         allow_empty=True,
         required=False
     )
