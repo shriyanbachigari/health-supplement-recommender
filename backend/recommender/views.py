@@ -65,12 +65,16 @@ class RecommendAPIView(APIView):
         recommendations = []
         for supp, sc in top_n:
             recommendations.append({
-                'id':          supp.id,
-                'title':       supp.title,
-                'brand':       supp.brand,
-                'price':       supp.price,
-                'avg_rating':  supp.avg_rating,
-                'score':       round(sc, 2),
+                'id':           supp.id,
+                'title':        supp.title,
+                'brand':        supp.brand,
+                'category':     supp.category,
+                'price':        supp.price,
+                'avg_rating':   supp.avg_rating,
+                'rating_count': supp.rating_count,
+                'product_url':  supp.product_url,
+                'highlights':   supp.highlights,
+                'score':        round(sc, 2),
             })
 
         return Response({
@@ -114,3 +118,17 @@ class UserProfileAPIView(RetrieveAPIView):
             return self.request.user.profile
         except UserProfile.DoesNotExist:
             raise Http404("Profile not found")
+    
+    def retrieve(self, request, *args, **kwargs):
+        # Get the standard profile response
+        response = super().retrieve(request, *args, **kwargs)
+        
+        # Add user information to the response
+        response.data['user'] = {
+            'username': request.user.username,
+            'email': request.user.email,
+            'first_name': request.user.first_name,
+            'last_name': request.user.last_name,
+        }
+        
+        return response

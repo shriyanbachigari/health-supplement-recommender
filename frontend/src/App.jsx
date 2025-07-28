@@ -3,7 +3,7 @@ import LandingPage from './components/LandingPage'
 import SignupForm   from './components/SignupForm'
 import LoginForm    from './components/LoginForm'
 import OnboardingWizard from './onboard/OnboardingWizard'
-import RecommendationsPage from './components/RecommendationsPage'
+import Dashboard from './components/Dashboard'
 import PrivateRoute from './components/PrivateRoute'
 
 function App() {
@@ -23,7 +23,7 @@ function App() {
       />
 
       <Route element={<PrivateRoute />}>
-        <Route path="/dashboard" element={<RecommendationsPage />} />
+        <Route path="/dashboard" element={<Dashboard />} />
       </Route>
 
       <Route path="*" element={<Navigate to="/" replace />} />
