@@ -1,4 +1,5 @@
 import { Routes, Route, Navigate } from 'react-router-dom'
+import { useState, useEffect } from 'react'
 import LandingPage from './components/LandingPage'
 import SignupForm   from './components/SignupForm'
 import LoginForm    from './components/LoginForm'
@@ -7,7 +8,24 @@ import Dashboard from './components/Dashboard'
 import PrivateRoute from './components/PrivateRoute'
 
 function App() {
-  const token = localStorage.getItem('accessToken')
+  const [token, setToken] = useState(localStorage.getItem('accessToken'))
+
+  // Listen for storage changes to update token state
+  useEffect(() => {
+    const handleStorageChange = () => {
+      setToken(localStorage.getItem('accessToken'))
+    }
+    
+    window.addEventListener('storage', handleStorageChange)
+    
+    // Also check periodically for changes within the same tab
+    const interval = setInterval(handleStorageChange, 100)
+    
+    return () => {
+      window.removeEventListener('storage', handleStorageChange)
+      clearInterval(interval)
+    }
+  }, [])
   
   return (
     <Routes>

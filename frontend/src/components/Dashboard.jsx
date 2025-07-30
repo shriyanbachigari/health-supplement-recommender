@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { AiOutlineHome, AiFillHome } from 'react-icons/ai';
 import { GiPill, GiMedicines } from 'react-icons/gi';
 
@@ -7,6 +8,7 @@ export default function Dashboard() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [userName, setUserName] = useState('Dashboard');
+  const navigate = useNavigate();
 
   // Fetch user name and recommendations
   useEffect(() => {
@@ -238,7 +240,7 @@ export default function Dashboard() {
                       className="rounded-full bg-[#e7edf3] px-6 py-3 text-sm font-bold hover:bg-gray-200"
                       onClick={() => {
                         localStorage.removeItem('hasProfile');
-                        window.location.href = '/onboard';
+                        navigate('/onboard');
                       }}
                     >
                       {btn}
