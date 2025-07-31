@@ -88,6 +88,15 @@ export default function OnboardingWizard() {
             if (response.ok) {
               localStorage.setItem('hasProfile', 'true')
               navigate('/dashboard')
+            } else if (response.status === 401) {
+              // Token expired or invalid, redirect to login
+              localStorage.removeItem('accessToken')
+              localStorage.removeItem('hasProfile')
+              navigate('/login')
+            } else {
+              // Handle other errors
+              console.error('Onboarding failed:', response.status)
+              alert('Failed to save your profile. Please try again.')
             }
           }}
         />
