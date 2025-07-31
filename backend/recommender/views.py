@@ -2,13 +2,13 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from supplements.models import Supplement
 from supplements.serializers import SupplementSerializer
-from .serializers import UserProfileSerializer
+from .serializers import UserProfileSerializer, UserRegimenSerializer
 from rest_framework.permissions import IsAuthenticated
-from .models import UserProfile
-from rest_framework.status import HTTP_201_CREATED, HTTP_200_OK
+from .models import UserProfile, UserRegimen
+from rest_framework.status import HTTP_201_CREATED, HTTP_200_OK, HTTP_204_NO_CONTENT, HTTP_400_BAD_REQUEST
 from django.db.models import Q
 import math
-from rest_framework.generics import RetrieveAPIView
+from rest_framework.generics import RetrieveAPIView, ListCreateAPIView, DestroyAPIView
 from django.http import Http404
 
 class RecommendAPIView(APIView):
@@ -132,3 +132,19 @@ class UserProfileAPIView(RetrieveAPIView):
         }
         
         return response
+
+
+class UserRegimenView(ListCreateAPIView):
+    permission_classes = [IsAuthenticated]
+    serializer_class = UserRegimenSerializer
+    
+    def get_queryset(self):
+        return UserRegimen.objects.filter(user=self.request.user)
+
+
+class UserRegimenDeleteView(DestroyAPIView):
+    permission_classes = [IsAuthenticated]
+    serializer_class = UserRegimenSerializer
+    
+    def get_queryset(self):
+        return UserRegimen.objects.filter(user=self.request.user)

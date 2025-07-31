@@ -1,6 +1,5 @@
 from django.db import models
 from django.conf import settings
-from django.db import models
 from django.contrib.postgres.fields import ArrayField
 
 DIETARY_RESTRICTION_CHOICES = [
@@ -49,6 +48,13 @@ GENDER_CHOICES = [
     ('other', 'Other'),
 ]
 
+TIMING_CHOICES = [
+    ('morning', 'Morning'),
+    ('afternoon', 'Afternoon'), 
+    ('evening', 'Evening'),
+    ('night', 'Night'),
+]
+
 class UserProfile(models.Model):
     user = models.OneToOneField(settings.AUTH_USER_MODEL, 
                                 on_delete=models.CASCADE, 
@@ -82,3 +88,22 @@ class UserProfile(models.Model):
         blank=True,
         help_text="Select one or more micronutrients to prioritize"
     )
+
+
+class UserRegimen(models.Model):
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    supplement_title = models.CharField(max_length=200)
+    supplement_brand = models.CharField(max_length=100, blank=True)
+    supplement_price = models.DecimalField(max_digits=8, decimal_places=2, null=True, blank=True)
+    supplement_url = models.URLField(blank=True)
+    supplement_category = models.CharField(max_length=100, blank=True)
+    dosage = models.CharField(max_length=100)
+    timing = models.CharField(max_length=20, choices=TIMING_CHOICES)
+    notes = models.TextField(blank=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    
+    class Meta:
+        ordering = ['-created_at']
+    
+    def __str__(self):
+        return f"{self.supplement_title} - {self.timing}"

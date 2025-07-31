@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import UserProfile, HEALTH_GOAL_CHOICES, MICRONUTRIENT_CHOICES, DIETARY_RESTRICTION_CHOICES
+from .models import UserProfile, UserRegimen, HEALTH_GOAL_CHOICES, MICRONUTRIENT_CHOICES, DIETARY_RESTRICTION_CHOICES, TIMING_CHOICES
 
 class UserProfileSerializer(serializers.ModelSerializer):
     user = serializers.HiddenField(
@@ -36,3 +36,11 @@ class UserProfileSerializer(serializers.ModelSerializer):
             'known_allergies',
             'micronutrient_interests',
         ]
+
+
+class UserRegimenSerializer(serializers.ModelSerializer):
+    user = serializers.HiddenField(default=serializers.CurrentUserDefault())
+    
+    class Meta:
+        model = UserRegimen
+        fields = '__all__'
