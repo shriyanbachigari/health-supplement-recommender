@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { AiOutlineLogout } from 'react-icons/ai';
-import { MdSpa, MdDashboard, MdScience, MdWbSunny, MdVisibility, MdAddShoppingCart, MdStar, MdClose, MdDelete, MdWbTwilight, MdNightlight } from 'react-icons/md';
+import { MdSpa, MdDashboard, MdScience, MdWbSunny, MdVisibility, MdAddShoppingCart, MdStar, MdClose, MdDelete, MdWbTwilight, MdNightlight, MdFitnessCenter, MdLocalDrink, MdEmojiFoodBeverage, MdBiotech } from 'react-icons/md';
+import { CgPill } from 'react-icons/cg';
 
 export default function Dashboard() {
   const [recommendations, setRecommendations] = useState([]);
@@ -19,6 +20,20 @@ export default function Dashboard() {
     afternoon: { icon: MdWbTwilight, bg: 'bg-orange-100', text: 'text-orange-500', btn: 'text-orange-600 bg-orange-50 hover:bg-orange-100' },
     evening: { icon: MdWbTwilight, bg: 'bg-purple-100', text: 'text-purple-500', btn: 'text-purple-600 bg-purple-50 hover:bg-purple-100' },
     night: { icon: MdNightlight, bg: 'bg-indigo-100', text: 'text-indigo-500', btn: 'text-indigo-600 bg-indigo-50 hover:bg-indigo-100' }
+  };
+
+  // Category icon mapping for supplement images
+  const getCategoryIcon = (category) => {
+    const icons = {
+      'Vitamin Supplement': { icon: CgPill, color: 'bg-yellow-500' },
+      'Protein Supplement': { icon: MdFitnessCenter, color: 'bg-purple-500' },
+      'Digestive Probiotic': { icon: MdBiotech, color: 'bg-pink-500' },
+      'Energy Drinks': { icon: MdLocalDrink, color: 'bg-red-500' },
+      'Milk Drink Mixes': { icon: MdEmojiFoodBeverage, color: 'bg-blue-500' },
+      // Fallback
+      'default': { icon: CgPill, color: 'bg-gray-500' }
+    };
+    return icons[category] || icons.default;
   };
 
   // API functions for regimen management
@@ -405,6 +420,15 @@ export default function Dashboard() {
               {recommendations.slice(0, 6).map((supplement, index) => (
                 <div key={supplement.id || index} className="bg-white p-4 rounded-2xl shadow-sm border border-[var(--border-color)] hover:shadow-md hover:border-[var(--brand-color)] transition-all duration-300">
                   <div className="flex items-center gap-6">
+                    {(() => {
+                      const categoryInfo = getCategoryIcon(supplement.category);
+                      const IconComponent = categoryInfo.icon;
+                      return (
+                        <div className={`w-16 h-16 ${categoryInfo.color} rounded-xl flex items-center justify-center text-white flex-shrink-0`}>
+                          <IconComponent className="text-2xl" />
+                        </div>
+                      );
+                    })()}
                     <div className="flex-grow">
                       <p className="text-xs text-indigo-500 font-semibold uppercase">{supplement.category || 'Vitamin Supplement'}</p>
                       <h4 className="text-lg font-semibold text-[var(--text-primary)] mt-1">{supplement.title}</h4>
