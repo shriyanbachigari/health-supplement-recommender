@@ -39,10 +39,10 @@ export default function SignupForm() {
   return (
     <div className="min-h-screen flex flex-col bg-white">
       <header className="flex items-center justify-between border-b border-[#e7edf4] px-4 md:px-10 py-3 bg-white">
-        <div className="flex items-center gap-4 text-[#0d141c]">
+        <Link to="/" className="flex items-center gap-4 text-[#0d141c] hover:text-[#0c7ff2] transition-colors">
           <MdSpa className="text-[#0c7ff2] text-3xl" />
           <h2 className="text-[#0d141c] text-lg font-bold">SuppleNet</h2>
-        </div>
+        </Link>
         <div className="flex items-center gap-3">
           <div className="w-8 h-8 rounded-full border-2 border-[#0c7ff2] bg-gradient-to-br from-blue-400 to-blue-600 flex items-center justify-center text-white font-semibold text-sm">
             ?

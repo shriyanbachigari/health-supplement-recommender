@@ -37,10 +37,12 @@ Visit `http://localhost:3000` to try it out.
 - Personalized recommendations based on your data
 
 ### Supplement Management
-- Browse recommended supplements by category
+- Browse complete supplement database with search and filtering
+- Pagination for performance with large datasets
 - Add to personal regimen with dosage/timing
 - Visual organization by time of day (morning, evening, etc.)
 - Direct links to purchase products
+- Category-based browsing with visual icons
 
 ## API Endpoints
 
@@ -48,14 +50,24 @@ Visit `http://localhost:3000` to try it out.
 POST /api/signup/       # User registration
 POST /api/token/        # Login
 GET  /api/recommend/    # Get recommendations
+GET  /api/supplements/  # Browse all supplements
 POST /api/regimen/      # Manage supplement regimen
+GET  /api/profile/      # User profile management
 ```
 
 ## Screenshots
 
 ### Landing Page
 ![Landing Page](screenshots/landing.png)
-*Clean, professional homepage with clear call-to-action*
+*Full homepage overview - clean design with clear navigation and call-to-action (zoomed out to show complete layout)*
+
+### Sign Up
+![Sign Up](screenshots/signup.png)
+*User registration form with clean validation*
+
+### Login
+![Login](screenshots/login.png)
+*Secure authentication interface*
 
 ### Onboarding Wizard
 ![Onboarding](screenshots/onboarding.png)
@@ -63,11 +75,11 @@ POST /api/regimen/      # Manage supplement regimen
 
 ### Dashboard
 ![Dashboard](screenshots/dashboard.png)
-*Personalized recommendations with visual category icons*
+*Daily supplement schedule organized by timing along with personalized recommendations with visual category icons*
 
-### Regimen Management
-![Regimen](screenshots/regimen.png)
-*Daily supplement schedule organized by timing*
+### Supplements Directory
+![Supplements](screenshots/supplements.png)
+*Complete supplement database with search, filtering, and pagination*
 
 ### Add to Regimen Modal
 ![Add Modal](screenshots/add-modal.png)

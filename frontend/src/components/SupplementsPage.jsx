@@ -24,7 +24,6 @@ export default function SupplementsPage() {
 
   const ITEMS_PER_PAGE = 10;
 
-  // Category icon mapping (same as Dashboard)
   const getCategoryIcon = (category) => {
     const icons = {
       'Vitamin Supplement': { icon: CgPill, color: 'bg-yellow-500' },
@@ -37,16 +36,13 @@ export default function SupplementsPage() {
     return icons[category] || icons.default;
   };
 
-  // Get unique categories from supplements
   const categories = ['All', ...new Set(supplements.map(s => s.category).filter(Boolean))];
 
-  // Fetch all supplements from database
   useEffect(() => {
     const fetchSupplements = async () => {
       try {
         const token = localStorage.getItem('accessToken');
         
-        // Fetch user name
         try {
           const profileResponse = await fetch('http://localhost:8000/api/profile/', {
             headers: { 'Authorization': `Bearer ${token}`, 'Content-Type': 'application/json' }
@@ -60,7 +56,6 @@ export default function SupplementsPage() {
           console.log('Could not fetch profile:', profileError);
         }
 
-        // Fetch all supplements (you'll need to create this endpoint)
         const response = await fetch('http://localhost:8000/api/supplements/', {
           headers: { 'Authorization': `Bearer ${token}`, 'Content-Type': 'application/json' }
         });
@@ -84,16 +79,13 @@ export default function SupplementsPage() {
     fetchSupplements();
   }, []);
 
-  // Filter and sort supplements
   useEffect(() => {
     let filtered = supplements;
 
-    // Filter by category
     if (selectedCategory !== 'All') {
       filtered = filtered.filter(s => s.category === selectedCategory);
     }
 
-    // Filter by search term
     if (searchTerm) {
       filtered = filtered.filter(s => 
         s.title?.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -101,7 +93,6 @@ export default function SupplementsPage() {
       );
     }
 
-    // Sort
     filtered.sort((a, b) => {
       switch (sortBy) {
         case 'name':
@@ -117,14 +108,12 @@ export default function SupplementsPage() {
 
     setFilteredSupplements(filtered);
     
-    // Reset pagination when filters change
     setCurrentPage(1);
     const initialItems = filtered.slice(0, ITEMS_PER_PAGE);
     setDisplayedSupplements(initialItems);
     setHasMore(filtered.length > ITEMS_PER_PAGE);
   }, [supplements, selectedCategory, searchTerm, sortBy]);
 
-  // Load more supplements
   const loadMoreSupplements = () => {
     setLoadingMore(true);
     
@@ -138,10 +127,9 @@ export default function SupplementsPage() {
       setCurrentPage(nextPage);
       setHasMore(endIndex < filteredSupplements.length);
       setLoadingMore(false);
-    }, 500); // Small delay for better UX
+    }, 500);
   };
 
-  // Add to regimen function (same as Dashboard)
   const addToRegimen = async (supplementData) => {
     try {
       const token = localStorage.getItem('accessToken');
@@ -163,7 +151,6 @@ export default function SupplementsPage() {
     }
   };
 
-  // Modal component (same as Dashboard)
   const AddToRegimenModal = () => {
     const [dosage, setDosage] = useState('');
     const [timing, setTiming] = useState('morning');
@@ -277,7 +264,6 @@ export default function SupplementsPage() {
         }
       `}</style>
       
-      {/* Sidebar */}
       <aside className="w-64 bg-white p-6 border-r border-[var(--border-color)] min-h-screen flex flex-col">
         <div className="flex items-center gap-2 mb-12">
           <MdSpa className="text-[var(--brand-color)] text-3xl" />
@@ -319,17 +305,14 @@ export default function SupplementsPage() {
         </div>
       </aside>
 
-      {/* Main Content */}
       <main className="flex-1 p-10">
         <header className="mb-8">
           <h2 className="text-4xl font-bold text-[var(--text-primary)]">All Supplements</h2>
           <p className="text-[var(--text-secondary)] mt-2">Browse our complete supplement database</p>
         </header>
 
-        {/* Search and Filters */}
         <div className="mb-8 bg-white p-6 rounded-2xl border border-[var(--border-color)]">
           <div className="flex flex-col md:flex-row gap-4">
-            {/* Search */}
             <div className="flex-1 relative">
               <MdSearch className="absolute left-3 top-1/2 transform -translate-y-1/2 text-[var(--text-secondary)] text-xl" />
               <input
@@ -341,7 +324,6 @@ export default function SupplementsPage() {
               />
             </div>
 
-            {/* Category Filter */}
             <select
               value={selectedCategory}
               onChange={(e) => setSelectedCategory(e.target.value)}
@@ -352,7 +334,6 @@ export default function SupplementsPage() {
               ))}
             </select>
 
-            {/* Sort */}
             <select
               value={sortBy}
               onChange={(e) => setSortBy(e.target.value)}
@@ -365,7 +346,6 @@ export default function SupplementsPage() {
           </div>
         </div>
 
-        {/* Loading/Error States */}
         {loading && (
           <div className="flex justify-center items-center p-8">
             <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"></div>
@@ -379,7 +359,6 @@ export default function SupplementsPage() {
           </div>
         )}
 
-        {/* Supplements Grid */}
         {!loading && !error && (
           <div className="space-y-4">
             <div className="flex justify-between items-center">
@@ -457,7 +436,6 @@ export default function SupplementsPage() {
                   ))}
                 </div>
 
-                {/* Load More Button */}
                 {hasMore && (
                   <div className="text-center mt-8">
                     <button

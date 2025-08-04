@@ -14,7 +14,6 @@ export default function Dashboard() {
   const [selectedSupplement, setSelectedSupplement] = useState(null);
   const navigate = useNavigate();
 
-  // Timing configuration for regimen cards
   const timingConfig = {
     morning: { icon: MdWbSunny, bg: 'bg-yellow-100', text: 'text-yellow-500', btn: 'text-yellow-600 bg-yellow-50 hover:bg-yellow-100' },
     afternoon: { icon: MdWbTwilight, bg: 'bg-orange-100', text: 'text-orange-500', btn: 'text-orange-600 bg-orange-50 hover:bg-orange-100' },
@@ -22,7 +21,6 @@ export default function Dashboard() {
     night: { icon: MdNightlight, bg: 'bg-indigo-100', text: 'text-indigo-500', btn: 'text-indigo-600 bg-indigo-50 hover:bg-indigo-100' }
   };
 
-  // Category icon mapping for supplement images
   const getCategoryIcon = (category) => {
     const icons = {
       'Vitamin Supplement': { icon: CgPill, color: 'bg-yellow-500' },
@@ -30,13 +28,11 @@ export default function Dashboard() {
       'Digestive Probiotic': { icon: MdBiotech, color: 'bg-pink-500' },
       'Energy Drinks': { icon: MdLocalDrink, color: 'bg-red-500' },
       'Milk Drink Mixes': { icon: MdEmojiFoodBeverage, color: 'bg-blue-500' },
-      // Fallback
       'default': { icon: CgPill, color: 'bg-gray-500' }
     };
     return icons[category] || icons.default;
   };
 
-  // API functions for regimen management
   const fetchRegimen = async () => {
     const token = localStorage.getItem('accessToken');
     try {
@@ -91,13 +87,11 @@ export default function Dashboard() {
     }
   };
 
-  // Fetch user name, recommendations, and regimen
   useEffect(() => {
     const fetchData = async () => {
       try {
         const token = localStorage.getItem('accessToken');
         
-        // Fetch user profile for name
         try {
           const profileResponse = await fetch('http://localhost:8000/api/profile/', {
             headers: {
@@ -109,7 +103,6 @@ export default function Dashboard() {
           if (profileResponse.ok) {
             const profileData = await profileResponse.json();
             console.log('Profile API response:', profileData);
-            // Prioritize first name, then username, then email as fallback
             const name = profileData.user?.first_name || profileData.user?.username || profileData.user?.email || 'User';
             setUserName(name);
           } else {
@@ -119,7 +112,6 @@ export default function Dashboard() {
           console.log('Could not fetch profile:', profileError);
         }
 
-        // Fetch recommendations
         const response = await fetch('http://localhost:8000/api/recommend/', {
           headers: {
             'Authorization': `Bearer ${token}`,
@@ -134,7 +126,6 @@ export default function Dashboard() {
           setError('Failed to fetch recommendations');
         }
 
-        // Fetch regimen
         await fetchRegimen();
         
       } catch (err) {
@@ -148,7 +139,6 @@ export default function Dashboard() {
     fetchData();
   }, []);
 
-  // Modal component for adding supplements to regimen
   const AddToRegimenModal = () => {
     const [dosage, setDosage] = useState('');
     const [timing, setTiming] = useState('morning');
@@ -396,7 +386,6 @@ export default function Dashboard() {
         <section>
           <div className="flex justify-between items-center mb-6">
             <h3 className="text-2xl font-semibold text-[var(--text-primary)]">Personalized Recommendations</h3>
-            <button className="text-sm font-medium text-[var(--text-accent)] hover:underline">View All</button>
           </div>
           
           {loading && (
