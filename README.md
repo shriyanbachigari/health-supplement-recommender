@@ -1,94 +1,90 @@
-# Health Supplement Recommender
+# SuppleNet - Health Supplement Recommender
 
-A personalized health supplement recommendation system built with Django REST Framework and React.
+A full-stack web app that recommends personalized supplements based on your health profile and goals.
 
-## Features
+## What it does
 
-- **Personalized Onboarding**: 4-step wizard to capture health goals, micronutrient interests, dietary restrictions, and personal info
-- **ML-Powered Recommendations**: Intelligent supplement suggestions based on user preferences
-- **Beautiful Dashboard**: Clean, modern interface with real-time data
-- **User Authentication**: Secure JWT-based authentication system
-- **Responsive Design**: Works seamlessly on desktop and mobile devices
+- **Smart onboarding**: Collects your health info, goals, and preferences
+- **Personalized recommendations**: Shows supplements tailored to your profile  
+- **Regimen management**: Add supplements to your daily routine with custom timing
+- **Clean interface**: Easy to use on any device
 
 ## Tech Stack
 
-- **Backend**: Django REST Framework, PostgreSQL, JWT Authentication
-- **Frontend**: React, Tailwind CSS, React Router
-- **Deployment**: Docker & Docker Compose
+**Backend:** Django, PostgreSQL, JWT auth  
+**Frontend:** React, Tailwind CSS  
+**Deployment:** Docker, Nginx  
 
-## Quick Start with Docker
+## Quick Start
 
-1. **Clone the repository**
-   ```bash
-   git clone https://github.com/shriyanbachigari/health-supplement-recommender.git
-   cd health-supplement-recommender
-   ```
+```bash
+git clone https://github.com/shriyanbachigari/health-supplement-recommender.git
+cd health-supplement-recommender
+docker-compose up --build
+```
 
-2. **Run with Docker Compose**
-   ```bash
-   docker-compose up --build
-   ```
+Visit `http://localhost:3000` to try it out.
 
-3. **Access the application**
-   - Frontend: http://localhost:3000
-   - Backend API: http://localhost:8000
+## Features
 
-## Manual Setup
+### Authentication
+- Secure signup/login with JWT tokens
+- Protected routes and session management
 
-### Backend Setup
+### Health Profiling  
+- Multi-step onboarding wizard
+- Health goals, conditions, lifestyle tracking
+- Personalized recommendations based on your data
 
-1. **Navigate to backend directory**
-   ```bash
-   cd backend
-   ```
-
-2. **Create virtual environment**
-   ```bash
-   python -m venv venv
-   source venv/bin/activate  # On Windows: venv\Scripts\activate
-   ```
-
-3. **Install dependencies**
-   ```bash
-   pip install -r requirements.txt
-   ```
-
-4. **Run migrations**
-   ```bash
-   python manage.py migrate
-   ```
-
-5. **Start development server**
-   ```bash
-   python manage.py runserver
-   ```
-
-### Frontend Setup
-
-1. **Navigate to frontend directory**
-   ```bash
-   cd frontend
-   ```
-
-2. **Install dependencies**
-   ```bash
-   npm install
-   ```
-
-3. **Start development server**
-   ```bash
-   npm start
-   ```
+### Supplement Management
+- Browse recommended supplements by category
+- Add to personal regimen with dosage/timing
+- Visual organization by time of day (morning, evening, etc.)
+- Direct links to purchase products
 
 ## API Endpoints
 
-- `POST /api/auth/register/` - User registration
-- `POST /api/auth/login/` - User login
-- `GET /api/profile/` - Get user profile
-- `POST /api/onboard/` - Submit onboarding data
-- `GET /api/recommend/` - Get personalized recommendations
+```
+POST /api/signup/       # User registration
+POST /api/token/        # Login
+GET  /api/recommend/    # Get recommendations
+POST /api/regimen/      # Manage supplement regimen
+```
 
+## Screenshots
 
-## License
+### Landing Page
+![Landing Page](screenshots/landing.png)
+*Clean, professional homepage with clear call-to-action*
 
-This project is licensed under the MIT License.
+### Onboarding Wizard
+![Onboarding](screenshots/onboarding.png)
+*Multi-step health profile creation process*
+
+### Dashboard
+![Dashboard](screenshots/dashboard.png)
+*Personalized recommendations with visual category icons*
+
+### Regimen Management
+![Regimen](screenshots/regimen.png)
+*Daily supplement schedule organized by timing*
+
+### Add to Regimen Modal
+![Add Modal](screenshots/add-modal.png)
+*Easy supplement addition with dosage and timing options*
+
+## What I learned
+
+- Building REST APIs with Django
+- JWT authentication implementation
+- React state management and routing
+- Docker containerization
+- Database design for user profiles and recommendations
+
+## Future improvements
+
+- Machine learning for better recommendations (scikit-learn)
+- Supplement interaction warnings
+- Progress tracking and analytics
+- Mobile app
+

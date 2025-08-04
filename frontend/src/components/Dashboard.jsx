@@ -286,7 +286,10 @@ export default function Dashboard() {
               </button>
             </li>
             <li>
-              <button className="flex items-center text-[var(--text-secondary)] hover:bg-blue-50 hover:text-[var(--text-accent)] rounded-lg py-2 px-4 transition-colors w-full">
+              <button 
+                onClick={() => navigate('/supplements')}
+                className="flex items-center text-[var(--text-secondary)] hover:bg-blue-50 hover:text-[var(--text-accent)] rounded-lg py-2 px-4 transition-colors w-full"
+              >
                 <MdScience className="mr-3 text-xl" />
                 Supplements
               </button>
