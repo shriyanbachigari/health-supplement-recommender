@@ -1,21 +1,24 @@
 # SuppleNet - Health Supplement Recommender
 
-A full-stack web app that recommends personalized supplements based on your health profile and goals.
+A deployed full-stack web application that provides personalized supplement recommendations to patients based on their health profiles and goals. Currently used by patients of healthcare practitioners to optimize their supplement regimens.
 
 ## What it does
 
-- **Smart onboarding**: Collects your health info, goals, and preferences
-- **Personalized recommendations**: Shows supplements tailored to your profile  
-- **Regimen management**: Add supplements to your daily routine with custom timing
-- **Clean interface**: Easy to use on any device
+- **Patient-focused platform**: Helps patients manage their supplement regimens as recommended by physician
+- **Smart onboarding**: Collects comprehensive health information, goals, and preferences
+- **Clinical recommendations**: Provides supplements tailored to individual patient profiles  
+- **Regimen compliance**: Enables patients to track daily supplement schedules with custom timing
 
 ## Tech Stack
 
 **Backend:** Django, PostgreSQL, JWT auth  
 **Frontend:** React, Tailwind CSS  
 **Deployment:** Docker, Nginx  
+**Database:** PostgreSQL with 3000+ supplement records  
 
-## Quick Start
+## Development Setup
+
+For developers wanting to contribute or set up a local development environment:
 
 ```bash
 git clone https://github.com/shriyanbachigari/health-supplement-recommender.git
@@ -23,7 +26,9 @@ cd health-supplement-recommender
 docker-compose up --build
 ```
 
-Visit `http://localhost:3000` to try it out.
+Visit `http://localhost:3000` for local development.
+
+> **Note:** This is the development setup. The production application is deployed.
 
 ## Features
 
@@ -32,9 +37,10 @@ Visit `http://localhost:3000` to try it out.
 - Protected routes and session management
 
 ### Health Profiling  
-- Multi-step onboarding wizard
-- Health goals, conditions, lifestyle tracking
-- Personalized recommendations based on your data
+- Multi-step onboarding wizard for comprehensive patient data collection
+- Health goals, medical conditions, and lifestyle tracking
+- Clinical-grade recommendations based on patient profiles
+- Integration with healthcare provider workflows
 
 ### Supplement Management
 - Browse complete supplement database with search and filtering
@@ -87,11 +93,12 @@ GET  /api/profile/      # User profile management
 
 ## What I learned
 
-- Building REST APIs with Django
-- JWT authentication implementation
-- React state management and routing
-- Docker containerization
-- Database design for user profiles and recommendations
+- Building production-grade REST APIs with Django
+- Implementing secure JWT authentication for healthcare applications
+- Advanced React state management and routing for complex workflows
+- Docker containerization and production deployment
+- Database design for patient data and clinical recommendations
+- Healthcare application security and compliance considerations
 
 ## Future improvements
 
